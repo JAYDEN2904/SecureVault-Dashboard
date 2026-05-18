@@ -1,0 +1,15 @@
+.status-bar {
+  height: var(--status-height);
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: 0 var(--space-4);
+  border-top: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.status-bar__muted {
+  color: var(--text-muted);
+}

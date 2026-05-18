@@ -1,0 +1,53 @@
+.tree-node-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  height: var(--row-height);
+  padding-right: var(--space-3);
+  cursor: default;
+  user-select: none;
+  border-left: var(--space-1) solid transparent;
+}
+
+.tree-node-row:hover {
+  background: var(--bg-hover);
+}
+
+.tree-node-row.is-focused {
+  outline: var(--space-1) solid color-mix(in srgb, var(--accent-blue) 55%, transparent);
+  outline-offset: calc(var(--space-1) * -1);
+}
+
+.tree-node-row.is-selected {
+  background: var(--bg-selected);
+  border-left-color: var(--accent-blue);
+}
+
+.tree-node-row__chevron {
+  flex: 0 0 calc(var(--space-4) + var(--space-2));
+  text-align: center;
+  color: var(--text-muted);
+  font-size: var(--space-3);
+  line-height: 1;
+}
+
+.tree-node-row__chevron--placeholder {
+  visibility: hidden;
+}
+
+.tree-node-row__name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-primary);
+}
+
+.tree-node-row.is-folder .tree-node-row__name {
+  color: var(--text-primary);
+}
+
+.tree-node-row.is-file .tree-node-row__name {
+  color: var(--text-secondary);
+}
