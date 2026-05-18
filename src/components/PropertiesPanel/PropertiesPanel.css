@@ -24,6 +24,25 @@
   flex-direction: column;
 }
 
+.properties-panel__scroll::-webkit-scrollbar {
+  width: var(--space-2);
+  height: var(--space-2);
+}
+
+.properties-panel__scroll::-webkit-scrollbar-track {
+  background: var(--bg-surface);
+}
+
+.properties-panel__scroll::-webkit-scrollbar-thumb {
+  background: var(--border-muted);
+  border-radius: 999px;
+  border: var(--space-1) solid var(--bg-surface);
+}
+
+.properties-panel__scroll::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--text-muted) 45%, var(--border-muted));
+}
+
 .properties-panel__empty {
   flex: 1;
   display: flex;
@@ -169,6 +188,12 @@
   background: color-mix(in srgb, var(--accent-cyan) 18%, transparent);
 }
 
+.properties-panel__btn--primary:focus-visible {
+  outline: var(--space-1) solid var(--accent-cyan);
+  outline-offset: var(--space-1);
+  background: color-mix(in srgb, var(--accent-cyan) 22%, transparent);
+}
+
 .properties-panel__btn--secondary {
   border: 1px solid var(--border-muted);
   color: var(--text-secondary);
@@ -176,6 +201,13 @@
 }
 
 .properties-panel__btn--secondary:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.properties-panel__btn--secondary:focus-visible {
+  outline: var(--space-1) solid var(--accent-blue);
+  outline-offset: var(--space-1);
   background: var(--bg-hover);
   color: var(--text-primary);
 }

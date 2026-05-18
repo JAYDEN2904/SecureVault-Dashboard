@@ -8,23 +8,18 @@
   border-radius: var(--space-2);
   border: 1px solid var(--border-muted);
   background: var(--bg-base);
-  transition: box-shadow var(--transition-fast), border-color var(--transition-fast);
+  transition: box-shadow var(--transition-fast), border-color var(--transition-fast),
+    background var(--transition-fast);
+}
+
+.search-bar:hover {
+  border-color: color-mix(in srgb, var(--border-muted) 70%, var(--text-muted));
+  background: color-mix(in srgb, var(--bg-surface) 35%, var(--bg-base));
 }
 
 .search-bar:focus-within {
   border-color: color-mix(in srgb, var(--accent-blue) 70%, var(--border-muted));
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-blue) 22%, transparent);
-}
-
-.search-bar__label {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
 }
 
 .search-bar__icon {
@@ -45,11 +40,17 @@
   height: 34px;
   padding: 0 var(--space-1);
   border: none;
-  border-radius: 0;
+  border-radius: var(--space-1);
   background: transparent;
   color: var(--text-primary);
   outline: none;
   font: inherit;
+  transition: color var(--transition-fast);
+}
+
+.search-bar__input:focus-visible {
+  outline: var(--space-1) solid color-mix(in srgb, var(--accent-blue) 70%, transparent);
+  outline-offset: var(--space-1);
 }
 
 .search-bar__input::placeholder {
@@ -74,6 +75,13 @@
 }
 
 .search-bar__clear:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.search-bar__clear:focus-visible {
+  outline: var(--space-1) solid var(--accent-blue);
+  outline-offset: var(--space-1);
   background: var(--bg-hover);
   color: var(--text-primary);
 }

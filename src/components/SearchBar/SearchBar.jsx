@@ -25,9 +25,6 @@ export default function SearchBar({ query, onChange, onClear }) {
 
   return (
     <div className={`search-bar ${hasQuery ? 'search-bar--active' : ''}`}>
-      <label className="search-bar__label" htmlFor="vault-search">
-        Search vault
-      </label>
       <span className="search-bar__icon" aria-hidden="true">
         🔍
       </span>
@@ -36,6 +33,7 @@ export default function SearchBar({ query, onChange, onClear }) {
         id="vault-search"
         className="search-bar__input"
         type="search"
+        aria-label="File search"
         placeholder="Search files…"
         autoComplete="off"
         value={query}

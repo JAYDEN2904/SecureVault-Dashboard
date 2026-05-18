@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import './TreeNode.css'
 
 /*
@@ -16,7 +17,7 @@ RECURSIVE STRATEGY: Each TreeNode renders exactly one UI row for its node argume
  *   onFocus: (id: string) => void,
  * }} props
  */
-export default function TreeNode({
+function TreeNode({
   node,
   depth,
   expandedIds,
@@ -55,9 +56,11 @@ export default function TreeNode({
       <div
         role="treeitem"
         aria-expanded={isFolder ? expanded : undefined}
+        aria-selected={isFolder ? undefined : selected}
         className={rowClass}
         style={{ paddingLeft: `${depth * 16}px` }}
         data-node-id={node.id}
+        data-depth={depth}
         onClick={handleClick}
       >
         <span
@@ -94,3 +97,5 @@ export default function TreeNode({
     </>
   )
 }
+
+export default memo(TreeNode)

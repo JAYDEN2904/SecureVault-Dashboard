@@ -1,6 +1,6 @@
 import { useMemo, useRef } from 'react'
 import { useKeyboardNav } from '../../hooks/useKeyboardNav.js'
-import { findNodeById, findParentOf } from '../../utils/treeUtils.js'
+import { findNodeById, findParentOf, flattenVisible } from '../../utils/treeUtils.js'
 import TreeNode from '../TreeNode/TreeNode'
 import './FileExplorer.css'
 
@@ -45,9 +45,13 @@ export default function FileExplorer({
   const rootNode = useMemo(() => buildExplorerRootTree(treeData), [treeData])
   const treeRoots = useMemo(() => [rootNode], [rootNode])
 
+  const visibleNodes = useMemo(
+    () => flattenVisible(treeRoots, expandedIds),
+    [treeRoots, expandedIds],
+  )
+
   useKeyboardNav({
-    treeData: treeRoots,
-    expandedIds,
+    visibleNodes,
     setExpandedIds,
     focusedId,
     setFocusedId,

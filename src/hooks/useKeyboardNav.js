@@ -1,16 +1,14 @@
-import { useEffect, useMemo } from 'react'
-import { flattenVisible } from '../utils/treeUtils.js'
+import { useCallback, useEffect } from 'react'
 
 /**
  * Keyboard navigation for the vault tree aligns with what you actually see: `visibleNodes`
- * is recomputed whenever `treeData` (the explorer root array, including the synthetic vault
- * root) or `expandedIds` changes, using `flattenVisible` — the same preorder walk React uses
- * when rendering expanded folders. Every Arrow key therefore moves along real DOM rows (matched
- * via `data-node-id`), so focus never jumps into collapsed subtrees or skips synthetic branches.
+ * must match `flattenVisible(treeRoots, expandedIds)` from `FileExplorer` — the same preorder
+ * walk React uses when rendering expanded folders. Every Arrow key therefore moves along real
+ * DOM rows (matched via `data-node-id`), so focus never jumps into collapsed subtrees or skips
+ * synthetic branches.
  *
  * @param {{
- *   treeData: import('../utils/treeUtils.js').VaultNode[],
- *   expandedIds: Set<string>,
+ *   visibleNodes: { node: import('../utils/treeUtils.js').VaultNode; depth: number }[],
  *   setExpandedIds: React.Dispatch<React.SetStateAction<Set<string>>>,
  *   focusedId: string | null,
  *   setFocusedId: React.Dispatch<React.SetStateAction<string | null>>,
@@ -21,8 +19,7 @@ import { flattenVisible } from '../utils/treeUtils.js'
  */
 export function useKeyboardNav(opts) {
   const {
-    treeData,
-    expandedIds,
+    visibleNodes,
     setExpandedIds,
     focusedId,
     setFocusedId,
@@ -32,11 +29,6 @@ export function useKeyboardNav(opts) {
   } = opts
 
   void selectedNode
-
-  const visibleNodes = useMemo(
-    () => flattenVisible(treeData, expandedIds),
-    [treeData, expandedIds],
-  )
 
   useEffect(() => {
     const rootEl = explorerRef.current
@@ -48,11 +40,8 @@ export function useKeyboardNav(opts) {
     target?.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
   }, [focusedId, explorerRef])
 
-  useEffect(() => {
-    const rootEl = explorerRef.current
-    if (!rootEl) return
-
-    const onKeyDown = (e) => {
+  const handleKeyDown = useCallback(
+    (e) => {
       const len = visibleNodes.length
       if (!len) return
 
@@ -118,16 +107,21 @@ export function useKeyboardNav(opts) {
         setFocusedId(null)
         return
       }
-    }
+    },
+    [
+      visibleNodes,
+      focusedId,
+      setExpandedIds,
+      setFocusedId,
+      setSelectedNode,
+    ],
+  )
 
-    rootEl.addEventListener('keydown', onKeyDown)
-    return () => rootEl.removeEventListener('keydown', onKeyDown)
-  }, [
-    explorerRef,
-    focusedId,
-    setExpandedIds,
-    setFocusedId,
-    setSelectedNode,
-    visibleNodes,
-  ])
+  useEffect(() => {
+    const rootEl = explorerRef.current
+    if (!rootEl) return
+
+    rootEl.addEventListener('keydown', handleKeyDown)
+    return () => rootEl.removeEventListener('keydown', handleKeyDown)
+  }, [explorerRef, handleKeyDown])
 }
