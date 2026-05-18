@@ -22,7 +22,6 @@ export default function FileListRow({ node, selectedNode, focusedId, searchQuery
 
   const rowClass = [
     'file-list-row',
-    'file-list__grid-row',
     isSelected ? 'is-selected' : '',
     isMatch ? 'is-match' : '',
     isFocused ? 'is-focused' : '',
@@ -31,23 +30,23 @@ export default function FileListRow({ node, selectedNode, focusedId, searchQuery
     .join(' ')
 
   return (
-    <div
-      role="row"
+    <tr
       className={rowClass}
       style={{ '--file-row-accent': accent }}
       onClick={() => onSelect(node)}
     >
-      <span className="file-list-row__dot" aria-hidden="true" />
-      <span className="file-list-row__name">{node.name}</span>
-      <span
-        className="file-list-row__badge"
-        style={{ '--badge-accent': accent }}
-      >
-        {typeLabel}
-      </span>
-      <span className="file-list-row__size">{formatSize(node.size)}</span>
-      <span className="file-list-row__modified">—</span>
-      <div
+      <td className="file-list-row__name-cell">
+        <span className="file-list-row__dot" aria-hidden="true" />
+        <span className="file-list-row__name">{node.name}</span>
+      </td>
+      <td>
+        <span className="file-list-row__badge" style={{ '--badge-accent': accent }}>
+          {typeLabel}
+        </span>
+      </td>
+      <td className="file-list-row__size">{formatSize(node.size)}</td>
+      <td className="file-list-row__modified">—</td>
+      <td
         className="file-list-row__actions"
         onClick={(e) => e.stopPropagation()}
         onKeyDown={(e) => e.stopPropagation()}
@@ -66,7 +65,7 @@ export default function FileListRow({ node, selectedNode, focusedId, searchQuery
             Delete
           </button>
         </div>
-      </div>
-    </div>
+      </td>
+    </tr>
   )
 }

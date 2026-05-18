@@ -16,28 +16,48 @@ export default function FileList({ files, selectedNode, onSelect, focusedId, sea
   return (
     <section className="file-list" aria-label="Folder files">
       {!empty ? (
-        <>
-          <div className="file-list__header-row file-list__grid-row" role="row">
-            <span className="file-list__header-cell file-list__header-cell--lead" aria-hidden="true" />
-            <span className="file-list__header-cell">Name</span>
-            <span className="file-list__header-cell">Type</span>
-            <span className="file-list__header-cell">Size</span>
-            <span className="file-list__header-cell">Modified</span>
-            <span className="file-list__header-cell file-list__header-cell--actions">Actions</span>
-          </div>
-          <div className="file-list__body" role="rowgroup">
-            {files.map((node) => (
-              <FileListRow
-                key={node.id}
-                node={node}
-                selectedNode={selectedNode}
-                focusedId={focusedId}
-                searchQuery={searchQuery}
-                onSelect={onSelect}
-              />
-            ))}
-          </div>
-        </>
+        <div className="file-list__scroll">
+          <table className="file-list__table">
+            <colgroup>
+              <col className="file-list__col-name" />
+              <col className="file-list__col-type" />
+              <col className="file-list__col-size" />
+              <col className="file-list__col-modified" />
+              <col className="file-list__col-actions" />
+            </colgroup>
+            <thead>
+              <tr className="file-list__header-row">
+                <th scope="col" className="file-list__header-cell">
+                  Name
+                </th>
+                <th scope="col" className="file-list__header-cell">
+                  Type
+                </th>
+                <th scope="col" className="file-list__header-cell">
+                  Size
+                </th>
+                <th scope="col" className="file-list__header-cell">
+                  Modified
+                </th>
+                <th scope="col" className="file-list__header-cell file-list__header-cell--actions">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {files.map((node) => (
+                <FileListRow
+                  key={node.id}
+                  node={node}
+                  selectedNode={selectedNode}
+                  focusedId={focusedId}
+                  searchQuery={searchQuery}
+                  onSelect={onSelect}
+                />
+              ))}
+            </tbody>
+          </table>
+        </div>
       ) : (
         <div className="file-list__empty" role="status">
           <span className="file-list__empty-icon" aria-hidden="true">
