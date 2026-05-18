@@ -1,0 +1,57 @@
+:root {
+  /* Backgrounds */
+  --bg-base: #0d1117;
+  --bg-surface: #161b22;
+  --bg-elevated: #21262d;
+  --bg-hover: #1c2128;
+  --bg-selected: #0d2137;
+
+  /* Borders */
+  --border-subtle: #21262d;
+  --border-muted: #30363d;
+
+  /* Text */
+  --text-primary: #e6edf3;
+  --text-secondary: #8b949e;
+  --text-muted: #484f58;
+
+  /* Accent */
+  --accent-cyan: #00e5ff;
+  --accent-blue: #388bfd;
+  --accent-purple: #a371f7;
+
+  /* File type colors */
+  --type-pdf: #f85149;
+  --type-docx: #388bfd;
+  --type-zip: #d29922;
+  --type-img: #3fb950;
+  --type-default: #8b949e;
+
+  /* Status */
+  --status-success: #3fb950;
+  --status-warning: #d29922;
+  --status-danger: #f85149;
+
+  /* Spacing (4px base) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+
+  /* Layout */
+  --sidebar-width: 280px;
+  --panel-width: 320px;
+  --nav-height: 52px;
+  --search-height: 52px;
+  --status-height: 28px;
+  --row-height: 36px;
+
+  /* Typography */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Transitions */
+  --transition-fast: 120ms ease-out;
+  --transition-base: 180ms ease-out;
+}
