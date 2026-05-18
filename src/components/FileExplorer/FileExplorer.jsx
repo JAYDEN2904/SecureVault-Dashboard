@@ -1,4 +1,5 @@
 import { useMemo, useRef } from 'react'
+import { useKeyboardNav } from '../../hooks/useKeyboardNav.js'
 import { findNodeById, findParentOf } from '../../utils/treeUtils.js'
 import TreeNode from '../TreeNode/TreeNode'
 import './FileExplorer.css'
@@ -43,6 +44,17 @@ export default function FileExplorer({
   const explorerRef = useRef(null)
   const rootNode = useMemo(() => buildExplorerRootTree(treeData), [treeData])
   const treeRoots = useMemo(() => [rootNode], [rootNode])
+
+  useKeyboardNav({
+    treeData: treeRoots,
+    expandedIds,
+    setExpandedIds,
+    focusedId,
+    setFocusedId,
+    selectedNode,
+    setSelectedNode,
+    explorerRef,
+  })
 
   const onToggle = (id) => {
     setExpandedIds((prev) => {
