@@ -5,6 +5,7 @@ import FileExplorer, {
   buildExplorerRootTree,
   EXPLORER_ROOT_ID,
 } from './components/FileExplorer/FileExplorer.jsx'
+import FileList from './components/FileList/FileList.jsx'
 import StatusBar from './components/StatusBar/StatusBar.jsx'
 import { useFileTree } from './hooks/useFileTree.js'
 import { getTopLevelFolderIds } from './utils/treeUtils.js'
@@ -23,6 +24,11 @@ export default function App() {
 
   const explorerRoots = useMemo(() => [buildExplorerRootTree(tree)], [tree])
   const visibleRows = useFileTree(explorerRoots, expandedIds)
+
+  const listFiles = useMemo(() => {
+    const kids = activeFolder?.children ?? []
+    return kids.filter((n) => n.type === 'file')
+  }, [activeFolder])
 
   return (
     <div className="sv-shell">
@@ -44,7 +50,19 @@ export default function App() {
           />
         </div>
 
-        <div className="sv-column" />
+        <div className="sv-column">
+          <FileList
+            files={listFiles}
+            selectedNode={selectedNode}
+            onSelect={(node) => {
+              setSelectedNode(node)
+              setFocusedId(node.id)
+            }}
+            focusedId={focusedId}
+            searchQuery={searchQuery}
+          />
+        </div>
+
         <div className="sv-column" />
       </div>
 
