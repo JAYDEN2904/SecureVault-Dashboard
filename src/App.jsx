@@ -6,6 +6,7 @@ import FileExplorer, {
   EXPLORER_ROOT_ID,
 } from './components/FileExplorer/FileExplorer.jsx'
 import FileList from './components/FileList/FileList.jsx'
+import PropertiesPanel from './components/PropertiesPanel/PropertiesPanel.jsx'
 import SearchBar from './components/SearchBar/SearchBar.jsx'
 import StatusBar from './components/StatusBar/StatusBar.jsx'
 import { useFileTree } from './hooks/useFileTree.js'
@@ -86,7 +87,9 @@ export default function App() {
           />
         </div>
 
-        <div className="sv-column" />
+        <div className="sv-column">
+          <PropertiesPanel selectedNode={selectedNode} treeData={tree} />
+        </div>
       </div>
 
       <StatusBar visibleCount={visibleRows.length} query={searchQuery} />
