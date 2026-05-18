@@ -6,8 +6,10 @@ import FileExplorer, {
   EXPLORER_ROOT_ID,
 } from './components/FileExplorer/FileExplorer.jsx'
 import FileList from './components/FileList/FileList.jsx'
+import SearchBar from './components/SearchBar/SearchBar.jsx'
 import StatusBar from './components/StatusBar/StatusBar.jsx'
 import { useFileTree } from './hooks/useFileTree.js'
+import { useSearch } from './hooks/useSearch.js'
 import { getTopLevelFolderIds } from './utils/treeUtils.js'
 
 export default function App() {
@@ -22,23 +24,44 @@ export default function App() {
   const [searchQuery, setSearchQuery] = useState('')
   const [activeFolder, setActiveFolder] = useState(firstFolder)
 
+  const { filteredNodes, autoExpandedIds } = useSearch(tree, searchQuery)
+
+  const effectiveExpanded = useMemo(() => {
+    const next = new Set(expandedIds)
+    autoExpandedIds.forEach((id) => next.add(id))
+    return next
+  }, [expandedIds, autoExpandedIds])
+
   const explorerRoots = useMemo(() => [buildExplorerRootTree(tree)], [tree])
-  const visibleRows = useFileTree(explorerRoots, expandedIds)
+  const visibleRows = useFileTree(explorerRoots, effectiveExpanded)
+
+  const searchActive = Boolean(searchQuery.trim())
 
   const listFiles = useMemo(() => {
     const kids = activeFolder?.children ?? []
     return kids.filter((n) => n.type === 'file')
   }, [activeFolder])
 
+  const fileListFiles = useMemo(() => {
+    if (!searchActive) return listFiles
+    return filteredNodes.filter((n) => n.type === 'file')
+  }, [searchActive, filteredNodes, listFiles])
+
   return (
     <div className="sv-shell">
-      <div className="sv-toolbar" />
+      <div className="sv-toolbar">
+        <SearchBar
+          query={searchQuery}
+          onChange={setSearchQuery}
+          onClear={() => setSearchQuery('')}
+        />
+      </div>
 
       <div className="sv-main">
         <div className="sv-column">
           <FileExplorer
             treeData={tree}
-            expandedIds={expandedIds}
+            expandedIds={effectiveExpanded}
             setExpandedIds={setExpandedIds}
             selectedNode={selectedNode}
             setSelectedNode={setSelectedNode}
@@ -52,7 +75,7 @@ export default function App() {
 
         <div className="sv-column">
           <FileList
-            files={listFiles}
+            files={fileListFiles}
             selectedNode={selectedNode}
             onSelect={(node) => {
               setSelectedNode(node)
@@ -66,7 +89,7 @@ export default function App() {
         <div className="sv-column" />
       </div>
 
-      <StatusBar visibleCount={visibleRows.length} query="" />
+      <StatusBar visibleCount={visibleRows.length} query={searchQuery} />
     </div>
   )
 }
