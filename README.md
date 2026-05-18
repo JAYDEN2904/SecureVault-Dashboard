@@ -32,8 +32,6 @@ A dark-themed vault browser for nested folders: recursive tree, file list, prope
 
 [Figma — SecureVault Explorer (replace with your link)](https://www.figma.com/design/4vk6Tx1wKlJVOYjhIRyJb9/SecureVault-%E2%80%93-File-Explorer-Design-System?node-id=11-2&t=KTMH07JPWkG1QitT-1)
 
-Set sharing to **anyone with the link can view** before submitting.
-
 ---
 
 ## Recursive strategy
