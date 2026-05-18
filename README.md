@@ -30,7 +30,7 @@ A dark-themed vault browser for nested folders: recursive tree, file list, prope
 
 ## Design file
 
-[Figma — SecureVault Explorer (replace with your link)](https://www.figma.com/design/4vk6Tx1wKlJVOYjhIRyJb9/SecureVault-%E2%80%93-File-Explorer-Design-System?node-id=11-2&t=KTMH07JPWkG1QitT-1)
+[Figma — SecureVault Explorer](https://www.figma.com/design/4vk6Tx1wKlJVOYjhIRyJb9/SecureVault-%E2%80%93-File-Explorer-Design-System?node-id=11-2&t=KTMH07JPWkG1QitT-1)
 
 ---
 
