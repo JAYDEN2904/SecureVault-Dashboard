@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import vaultTree from '../data.json'
 import './App.css'
 import FileExplorer, {
@@ -6,12 +6,17 @@ import FileExplorer, {
   EXPLORER_ROOT_ID,
 } from './components/FileExplorer/FileExplorer.jsx'
 import FileList from './components/FileList/FileList.jsx'
+import NavBar from './components/NavBar/NavBar.jsx'
 import PropertiesPanel from './components/PropertiesPanel/PropertiesPanel.jsx'
 import SearchBar from './components/SearchBar/SearchBar.jsx'
 import StatusBar from './components/StatusBar/StatusBar.jsx'
 import { useFileTree } from './hooks/useFileTree.js'
 import { useSearch } from './hooks/useSearch.js'
-import { getTopLevelFolderIds } from './utils/treeUtils.js'
+import {
+  collectDescendantFolderIds,
+  findNodeById,
+  getTopLevelFolderIds,
+} from './utils/treeUtils.js'
 
 export default function App() {
   const tree = vaultTree
@@ -48,8 +53,34 @@ export default function App() {
     return filteredNodes.filter((n) => n.type === 'file')
   }, [searchActive, filteredNodes, listFiles])
 
+  const handleBreadcrumbNavigate = useCallback(
+    (folderId) => {
+      const folder = findNodeById(tree, folderId)
+      if (!folder || folder.type !== 'folder') return
+
+      setSelectedNode(null)
+      setActiveFolder(folder)
+      setFocusedId(folderId)
+
+      const descendantFolderIds = collectDescendantFolderIds(folder)
+      setExpandedIds((prev) => {
+        const next = new Set(prev)
+        descendantFolderIds.forEach((id) => next.delete(id))
+        return next
+      })
+    },
+    [tree],
+  )
+
   return (
     <div className="sv-shell">
+      <NavBar
+        treeData={tree}
+        selectedNode={selectedNode}
+        expandedIds={expandedIds}
+        onNavigate={handleBreadcrumbNavigate}
+      />
+
       <div className="sv-toolbar">
         <SearchBar
           query={searchQuery}
