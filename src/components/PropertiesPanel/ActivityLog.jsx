@@ -1,10 +1,7 @@
 import './PropertiesPanel.css'
 
 export default function ActivityLog() {
-  /*
-   * TODO(api): Replace this hardcoded activity list with data from the vault API.
-   * Each entry should include actor, action type, target resource, and server timestamps.
-   */
+
   const items = [
     { summary: 'Viewed', time: 'Today · 9:42 AM' },
     { summary: 'Edited', time: 'Yesterday · 4:16 PM' },
